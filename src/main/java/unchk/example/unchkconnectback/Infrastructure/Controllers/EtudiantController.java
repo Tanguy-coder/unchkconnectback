@@ -14,7 +14,7 @@ import unchk.example.unchkconnectback.Domain.UseCase.Formation.GetFormationByIdU
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/etudiants")
+@RequestMapping("/etudiants")
 public class EtudiantController {
     private final ListEtudiantUseCase getAll;
     private final GetEtudiantUseCase getById;
@@ -42,9 +42,15 @@ public class EtudiantController {
         return ResponseEntity.ok(presenter.presente(getById.execute(id)));
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<EtudiantResponse> store(@RequestBody DomainEtudiant etudiant) {
+        System.out.println("INE reçu : " + etudiant.getIne());
+        System.out.println("Début : " + etudiant.getAnnee_debut());
+        System.out.println("Fin : " + etudiant.getAnnee_fin());
+        System.out.println("Formation ID : " + etudiant.getFormation());
+        System.out.println("User ID : " + etudiant.getUser());
         DomainEtudiant domain = create.execute(etudiant);
+
         return ResponseEntity.ok(presenter.presente(domain));
     }
 

@@ -32,6 +32,14 @@ public class UserRepository implements UserRepositoryInterface {
     }
 
     @Override
+    public DomainUser findByEmail(String email) {
+        return repository.findByEmail(email)
+                .map(mapper::toDomain)
+                .orElseThrow(()->new RuntimeException("Non trouvé"));
+    }
+
+
+    @Override
     public DomainUser save(DomainUser user) {
         User jpaUser = repository.save(mapper.toJpa(user));
         return mapper.toDomain(jpaUser);
