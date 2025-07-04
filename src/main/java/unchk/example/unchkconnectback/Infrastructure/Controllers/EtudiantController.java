@@ -23,6 +23,7 @@ public class EtudiantController {
     private final GetFormationByIdUseCase show;
     private final EtudiantPresenterInterface presenter;
 
+
     public EtudiantController(ListEtudiantUseCase getAll, GetEtudiantUseCase getById, CreateEtudiantUseCase create, DeleteEtudiantUseCase delete, GetFormationByIdUseCase show, EtudiantPresenterInterface presenter) {
         this.getAll = getAll;
         this.getById = getById;

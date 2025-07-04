@@ -4,42 +4,54 @@ package unchk.example.unchkconnectback.Infrastructure.appConfig;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import unchk.example.unchkconnectback.Domain.Entity.DomainRole;
+import unchk.example.unchkconnectback.Domain.Entity.DomainUser;
 import unchk.example.unchkconnectback.Infrastructure.Mapper.UserMapper;
 import unchk.example.unchkconnectback.Infrastructure.Models.Role;
 import unchk.example.unchkconnectback.Infrastructure.Models.User;
+import unchk.example.unchkconnectback.Infrastructure.Repositories.RoleRepository;
 import unchk.example.unchkconnectback.Infrastructure.Repositories.UserRepository;
 
-@Component
+//@Component
 public class DataInitializer implements CommandLineRunner {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final UserMapper mapper;
+    private final RoleRepository roleRepository;
 
-    public DataInitializer(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper mapper) {
+    public DataInitializer(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper mapper, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.mapper = mapper;
+        this.roleRepository = roleRepository;
     }
 
     @Override
     public void run(String... args) {
-        Role adminRole = new Role();
+        // Create and save roles
+        DomainRole adminRole = new DomainRole();
         adminRole.setNom("ADMIN");
-        Role etudiantRole = new Role();
-        etudiantRole.setNom("ETUDIANT");
-        Role formateurRole = new Role();
-        formateurRole.setNom("FORMATEUR");
-        Role appuiInsertionRole = new Role();
-        appuiInsertionRole.setNom("APPUI_INSERTION");
+        DomainRole savedAdminRole = roleRepository.save(adminRole);
 
-        User admin = new User();
-        admin.setNom("Admin");
-        admin.setPrenom("User");
-        admin.setEmail("admin@uchk.sn");
+        DomainRole etudiantRole = new DomainRole();
+        etudiantRole.setNom("ETUDIANT");
+        roleRepository.save(etudiantRole);
+
+        DomainRole formateurRole = new DomainRole();
+        formateurRole.setNom("FORMATEUR");
+        roleRepository.save(formateurRole);
+
+        DomainRole appuiInsertionRole = new DomainRole();
+        appuiInsertionRole.setNom("APPUI_INSERTION");
+        roleRepository.save(appuiInsertionRole);
+
+        // Create and save admin user
+        DomainUser admin = new DomainUser();
+        admin.setNom("Etudiant ");
+        admin.setPrenom("User2");
+        admin.setEmail("etudiant@uchk.sn");
         admin.setPassword(passwordEncoder.encode("admin123"));
         admin.setContact("123456789");
-        admin.setRole(adminRole);
+        admin.setRole(etudiantRole);
 
-        User savedUser = userRepository.save(admin);
+        userRepository.save(admin);
     }
 }

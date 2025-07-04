@@ -26,6 +26,11 @@ public class UserService implements UserServiceInterface {
     }
 
     @Override
+    public DomainUser findByEmail(String email) {
+        return repository.findByEmail(email);
+    }
+
+    @Override
     public DomainUser save(DomainUser user) {
         return repository.save(user);
     }

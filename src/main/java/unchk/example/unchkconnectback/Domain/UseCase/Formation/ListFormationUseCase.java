@@ -14,6 +14,7 @@ public class ListFormationUseCase implements ListFormationUseCseInterface{
 
     @Override
     public List<DomainFormation> execute() {
+        System.out.println("Dans le use case Formation");
         return service.findAll();
     }
 }

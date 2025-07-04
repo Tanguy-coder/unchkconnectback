@@ -13,7 +13,7 @@ import unchk.example.unchkconnectback.Domain.UseCase.Formation.UpdateFormationUs
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/formations")
+@RequestMapping("/formations")
 public class FormationController {
     private final FormationPresenterInterface presenter;
     private final ListFormationUseCseInterface getAll;
@@ -36,7 +36,9 @@ public class FormationController {
 
     @PostMapping
     public ResponseEntity<FormationResponse> store(@RequestBody DomainFormation formation){
+        System.out.println("formation IN: " + formation);
         DomainFormation domain = create.execute(formation);
+        System.out.println("formation OUT: " + domain);
         return ResponseEntity.ok(presenter.presente(domain));
     }
 

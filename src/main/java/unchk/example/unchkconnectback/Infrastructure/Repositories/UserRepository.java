@@ -35,7 +35,7 @@ public class UserRepository implements UserRepositoryInterface {
     public DomainUser findByEmail(String email) {
         return repository.findByEmail(email)
                 .map(mapper::toDomain)
-                .orElseThrow(()->new RuntimeException("Non trouvé"));
+                .orElseThrow(()->new RuntimeException("User non trouvé avec l'id: " + email));
     }
 
 

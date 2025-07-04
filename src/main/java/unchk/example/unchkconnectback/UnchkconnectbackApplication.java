@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import unchk.example.unchkconnectback.Domain.Port.*;
+import unchk.example.unchkconnectback.Domain.UseCase.Authentication.LoginUseCase;
 import unchk.example.unchkconnectback.Domain.UseCase.Etudiants.CreateEtudiantUseCase;
 import unchk.example.unchkconnectback.Domain.UseCase.Etudiants.DeleteEtudiantUseCase;
 import unchk.example.unchkconnectback.Domain.UseCase.Etudiants.GetEtudiantUseCase;
@@ -39,6 +40,11 @@ public class UnchkconnectbackApplication {
 	}
 
 	@Bean
+	public AuthPresenter authPresenter(){
+		return new AuthPresenter();
+	}
+
+	@Bean
 	public UserPresenter userPresenter(UserMapper mapper){
 		return new UserPresenter(mapper);
 	}
@@ -62,6 +68,10 @@ public class UnchkconnectbackApplication {
 
 /***********************************************UseCases*********************************************** */
 
+	@Bean
+	public LoginUseCase loginUseCase(AuthServiceInterface authServiceInterface,UserServiceInterface userServiceInterface){
+		return new LoginUseCase(authServiceInterface, userServiceInterface);
+	}
 	@Bean
 	public CreatePersonnelUseCase createPersonnelUseCase(PersonnelServiceInterface serviceInterface){
 		return  new CreatePersonnelUseCase(serviceInterface);
